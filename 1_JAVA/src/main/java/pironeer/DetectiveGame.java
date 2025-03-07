@@ -147,7 +147,7 @@ public class DetectiveGame {
     }
 
     public boolean matchDyingMessage(Character character) {
-        if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||
+        if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||    //murderer.getHair() -> character.getHair()
                 dyingMessage.equals("옷은 " + character.getClothes() + " 윽..☠") ||
                 dyingMessage.equals("신발은 " + character.getShoes() + " 윽..☠")) {
             return true;
