@@ -60,7 +60,7 @@ public class DetectiveGame {
         // 6. 랜덤하게 속성 값을 선택하고 다잉메시지 출력
         String selectType = dyingMessageType.get(random.nextInt(dyingMessageType.size()));
         switch (selectType) {
-            case "hair" ->                                                    // -> 연산자를 사용하면 break 없이도 안전한 switch 문 작성 가능.
+            case "hair" ->                                                                  // -> 연산자를 사용하면 break 없이도 안전한 switch 문 작성 가능.
                     dyingMessage = "머리스타일은 " + murderer.getHair() + " 윽..☠";
             case "clothes" -> dyingMessage = "옷은 " + murderer.getClothes() + " 윽..☠";
             case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes() + " 윽..☠";
@@ -147,9 +147,9 @@ public class DetectiveGame {
     }
 
     public boolean matchDyingMessage(Character character) {
-        if (dyingMessage.equals("머리스타일은 " + murderer.getHair() + "윽..☠") ||
-                dyingMessage.equals("옷은 " + murderer.getClothes() + "윽..☠") ||
-                dyingMessage.equals("신발은 " + murderer.getShoes() + "윽..☠")) {
+        if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||
+                dyingMessage.equals("옷은 " + character.getClothes() + " 윽..☠") ||
+                dyingMessage.equals("신발은 " + character.getShoes() + " 윽..☠")) {
             return true;
         }
         return false;
