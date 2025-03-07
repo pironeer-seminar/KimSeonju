@@ -43,6 +43,7 @@ public class DetectiveGame {
         detectiveName = reader.nextLine().trim();                       // 입력 받기 (공백제거)
         timer.sleep(1500);
 
+
         // 5. 캐릭터 중 한 명을 희생자로 지정하고, 목록에서 제거
         victim = characters.get(random.nextInt(characters.size()));    // 희생자 지정
         characters.remove(victim);                                     // 목록에서 제거
@@ -59,9 +60,9 @@ public class DetectiveGame {
         // 6. 랜덤하게 속성 값을 선택하고 다잉메시지 출력
         String selectType = dyingMessageType.get(random.nextInt(dyingMessageType.size()));
         switch (selectType) {
-            case "hair" ->
-                    dyingMessage = "머리스타일은" + murderer.getHair();
-            case "clothes" -> dyingMessage = "옷은" + murderer.getClothes();
+            case "hair" ->                                                    // -> 연산자를 사용하면 break 없이도 안전한 switch 문 작성 가능.
+                    dyingMessage = "머리스타일은 " + murderer.getHair();
+            case "clothes" -> dyingMessage = "옷은 " + murderer.getClothes();
             case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes();
         }
 
