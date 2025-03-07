@@ -170,7 +170,7 @@ public class DetectiveGame {
         System.out.println("\n범인을 지목할 시간입니다.");
 
         // 10. charaters 각 항목을 인덱스와 함께 출력
-        IntStream.range(0, characters.size()).forEach(i -> System.out.println((i+1)+"."+characters.get(i)));
+        IntStream.range(0, characters.size()).forEach(i -> System.out.println((i+1)+"."+ characters.get(i).getName()));  //characters.get(i)는 Character 객체 자체를 반환 (객체의 메모리 주소 형식)
 
         System.out.println("\n누구를 범인으로 지목하시겠습니까? 이름을 입력하세요: ");
         String choiceName = reader.nextLine().trim();
@@ -232,7 +232,7 @@ public class DetectiveGame {
                 timer.sleep(1000);
                 String choice = promptChoice("용의자들의 인상착의를 다시 보겠습니까? (네/아니오): ");
                 if (choice.equals("네")) {
-                    System.out.println(detectiveName + ": 좋았어... 다시 차근차근 보자\\n");
+                    System.out.println(detectiveName + ": 좋았어... 다시 차근차근 보자\n");
                     timer.sleep(1000);
                     mainFlow();
                 } else {
