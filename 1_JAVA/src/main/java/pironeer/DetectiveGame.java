@@ -3,17 +3,19 @@ package pironeer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.IntStream;
+
 import pironeer.util.Reader;
 import pironeer.util.Timer;
 
 public class DetectiveGame {
 
     private List<Character> characters;
-    private Character murderer;
-    private Character victim;
+    private Character murderer;                         // 살인자
+    private Character victim;                           // 희생자
     private String dyingMessage;
-    private Character suspect;
-    private int lives;
+    private Character suspect;                          // 용의자
+    private int lives;                                  // 기회
     private String detectiveName;
 
     private final Reader reader = new Reader();
@@ -37,18 +39,32 @@ public class DetectiveGame {
         timer.sleep(1000);
 
         // 4. Reader 클래스를 사용하여 탐정의 이름을 입력받고 1.5초 정지
+        System.out.println("탐정의 이름을 입력해주세요:");
+        detectiveName = reader.nextLine();  // 입력 받기
+        timer.sleep(1500);
+        System.out.println(detectiveName + " 탐정님 어서 오십시오. 피로그래밍 " + detectiveName + "의 해커톤을 즐겨주시기 바랍니다.\n");
 
         // 5. 캐릭터 중 한 명을 희생자로 지정하고, 목록에서 제거
+        victim = characters.get(random.nextInt(characters.size()));    // 희생자 지정
+        characters.remove(victim);                                     // 목록에서 제거
 
-        murderer = characters.get(random.nextInt(characters.size()));
+        murderer = characters.get(random.nextInt(characters.size()));  // random.nextInt(characters.size())는 0부터 characters.size() - 1 사이의 무작위 정수를 생성
 
-        List<String> dyingMessageType = List.of(
+        List<String> dyingMessageType = List.of(                       // "List.of()" : 불변 리스트 생성
                 "hair",
                 "clothes",
                 "shoes"
         );
 
+
         // 6. 랜덤하게 속성 값을 선택하고 다잉메시지 출력
+        String selectType = dyingMessageType.get(random.nextInt(dyingMessageType.size()));
+        switch (selectType) {
+            case "hair" ->
+                    dyingMessage = "머리스타일은" + murderer.getHair();
+            case "clothes" -> dyingMessage = "옷은" + murderer.getClothes();
+            case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes();
+        }
 
         System.out.println("########################################");
         System.out.println("#######        평화로운 해커톤              ");
@@ -87,7 +103,7 @@ public class DetectiveGame {
         timer.sleep(1000);
 
         // 7. 용의자 총 인원수 출력
-        System.out.println("\n문제의 노트북 주위에 있는 사람은 " + {7번} + "명입니다.");
+        System.out.println("\n문제의 노트북 주위에 있는 사람은 " + characters.size() + "명입니다.");
         timer.sleep(1000);
 
         System.out.println("그중, 범인은 바로 이 자리에 있을 것입니다...");
@@ -111,6 +127,14 @@ public class DetectiveGame {
         String choiceName = reader.nextLine().trim();
 
         // 8. 사용자가 입력한 이름을 가진 용의자 조사
+        for (Character chara : characters) {                             // for-each 문
+            if (chara.getName().equals(choiceName)){
+                System.out.println(choiceName + "의 인상착의를 봅니다.");
+                System.out.println("- 머리: " + chara.getHair());
+                System.out.println("- 옷: " + chara.getClothes());
+                System.out.println("- 신발: " + chara.getShoes());
+            }
+        }
 
         System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
         System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
@@ -143,6 +167,7 @@ public class DetectiveGame {
         System.out.println("\n범인을 지목할 시간입니다.");
 
         // 10. charaters 각 항목을 인덱스와 함께 출력
+        IntStream.range(0, characters.size()).forEach(i -> System.out.println((i+1)+"."+characters.get(i)));
 
         System.out.println("\n누구를 범인으로 지목하시겠습니까? 이름을 입력하세요: ");
         String choiceName = reader.nextLine().trim();
