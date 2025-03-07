@@ -61,9 +61,9 @@ public class DetectiveGame {
         String selectType = dyingMessageType.get(random.nextInt(dyingMessageType.size()));
         switch (selectType) {
             case "hair" ->                                                    // -> 연산자를 사용하면 break 없이도 안전한 switch 문 작성 가능.
-                    dyingMessage = "머리스타일은 " + murderer.getHair();
-            case "clothes" -> dyingMessage = "옷은 " + murderer.getClothes();
-            case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes();
+                    dyingMessage = "머리스타일은 " + murderer.getHair() + " 윽..☠";
+            case "clothes" -> dyingMessage = "옷은 " + murderer.getClothes() + " 윽..☠";
+            case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes() + " 윽..☠";
         }
 
         System.out.println("########################################");
@@ -134,6 +134,7 @@ public class DetectiveGame {
                 System.out.println("- 옷: " + chara.getClothes());
                 System.out.println("- 신발: " + chara.getShoes());
             }
+            return;
         }
 
         System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
