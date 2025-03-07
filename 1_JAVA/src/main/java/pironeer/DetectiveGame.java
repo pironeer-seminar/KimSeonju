@@ -133,8 +133,10 @@ public class DetectiveGame {
                 System.out.println("- 머리: " + chara.getHair());
                 System.out.println("- 옷: " + chara.getClothes());
                 System.out.println("- 신발: " + chara.getShoes());
+
+                return;                                                      // # if문 성립시 함수 종료
             }
-            return;                                                      // # if문 성립시 함수 종료
+
         }
 
         System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
