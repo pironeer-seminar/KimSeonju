@@ -39,10 +39,9 @@ public class DetectiveGame {
         timer.sleep(1000);
 
         // 4. Reader 클래스를 사용하여 탐정의 이름을 입력받고 1.5초 정지
-        System.out.println("탐정의 이름을 입력해주세요:");
-        detectiveName = reader.nextLine();  // 입력 받기
+        System.out.print("탐정의 이름을 입력해주세요:");
+        detectiveName = reader.nextLine().trim();                       // 입력 받기 (공백제거)
         timer.sleep(1500);
-        System.out.println(detectiveName + " 탐정님 어서 오십시오. 피로그래밍 " + detectiveName + "의 해커톤을 즐겨주시기 바랍니다.\n");
 
         // 5. 캐릭터 중 한 명을 희생자로 지정하고, 목록에서 제거
         victim = characters.get(random.nextInt(characters.size()));    // 희생자 지정
