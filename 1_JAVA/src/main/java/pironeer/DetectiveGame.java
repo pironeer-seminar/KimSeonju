@@ -208,14 +208,6 @@ public class DetectiveGame {
         String choiceName = reader.nextLine().trim();
         System.out.println(detectiveName + ": 범인은 바로 " + choiceName + "씨야");
 
-//        for (Character character : characters) {
-//            if (character.getName().equals(choiceName)) {
-//                suspect = character;
-//                checkOutcome();
-//                return;
-//            }
-//        }
-//
         Optional<Character> foundSuspect = characters.stream()
                         .filter(c-> c.getName().equals(choiceName)).findFirst();
 
