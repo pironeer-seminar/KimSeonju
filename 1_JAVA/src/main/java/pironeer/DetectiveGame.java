@@ -1,9 +1,6 @@
 package pironeer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import pironeer.util.Reader;
@@ -148,34 +145,47 @@ public class DetectiveGame {
         timer.sleep(1000);
     }
 
+    // investigate
     public void investigate() {
         System.out.println("용의자와 대화를 나누고 인상착의를 수집하세요...");
-        for (int i = 1; i <= characters.size(); i++) {
-            System.out.println(i + ". " + characters.get(i - 1).getName());
-        }
+        IntStream.range(0, characters.size()).forEach(i -> System.out.println((i + 1) + ". " + characters.get(i).getName()));  // 용의자 리스트
 
         System.out.println("\n누구를 조사하시겠습니까? 이름을 입력하세요: ");
         String choiceName = reader.nextLine().trim();
 
-        // 8. 사용자가 입력한 이름을 가진 용의자 조사
-        for (Character chara : characters) {                             // for-each 문
-            if (chara.getName().equals(choiceName)){
-                System.out.println(choiceName + "의 인상착의를 봅니다.");
-                System.out.println("- 머리: " + chara.getHair());
-                System.out.println("- 옷: " + chara.getClothes());
-                System.out.println("- 신발: " + chara.getShoes());
+        Optional<Character> foundCharacter = characters.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(choiceName))
+                .findFirst();
 
-                return;                                                      // # if문 성립시 함수 종료
-            }
-
-        }
-
-        System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
-        System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
-        System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
-
-        investigate();
+        foundCharacter.ifPresentOrElse(                              // ifPresentOrElse(consumer, runnable)
+                chara -> printCharacter(chara),             // chara : foundCharacter가 가지고 있는 Character 객체
+                () -> {
+                    System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
+                    System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
+                    System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
+                }
+        );
     }
+
+//        // 8. 사용자가 입력한 이름을 가진 용의자 조사
+//        for (Character chara : characters) {                             // for-each 문
+//            if (chara.getName().equals(choiceName)){
+//                System.out.println(choiceName + "의 인상착의를 봅니다.");
+//                System.out.println("- 머리: " + chara.getHair());
+//                System.out.println("- 옷: " + chara.getClothes());
+//                System.out.println("- 신발: " + chara.getShoes());
+//
+//                return;                                                      // # if문 성립시 함수 종료
+//            }
+//
+//        }
+//
+//        System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
+//        System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
+//        System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
+//
+//        investigate();
+//    }
 
     public boolean matchDyingMessage(Character character) {
         if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||    //murderer.getHair() -> character.getHair()
@@ -201,7 +211,7 @@ public class DetectiveGame {
         System.out.println("\n범인을 지목할 시간입니다.");
 
         // 10. charaters 각 항목을 인덱스와 함께 출력
-        IntStream.range(0, characters.size()).forEach(i -> System.out.println((i+1)+"."+ characters.get(i).getName()));  //characters.get(i)는 Character 객체 자체를 반환 (객체의 메모리 주소 형식)
+        IntStream.range(0, characters.size()).forEach(i -> System.out.println((i+1)+". "+ characters.get(i).getName()));  //characters.get(i)는 Character 객체 자체를 반환 (객체의 메모리 주소 형식)
 
 
         System.out.println("\n누구를 범인으로 지목하시겠습니까? 이름을 입력하세요: ");
