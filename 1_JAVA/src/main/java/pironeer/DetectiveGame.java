@@ -178,6 +178,7 @@ public class DetectiveGame {
         investigate();
     }
 
+    //matchDyingMessage
     public boolean matchDyingMessage(Character character) {
         return List.of(
                 "머리스타일은 " + character.getHair() + " 윽..☠",
@@ -197,6 +198,7 @@ public class DetectiveGame {
         }
     }
 
+    //accuse
     public void accuse() {
         System.out.println("\n범인을 지목할 시간입니다.");
 
@@ -224,6 +226,7 @@ public class DetectiveGame {
         accuse();
     }
 
+    //checkOutcome
     public void checkOutcome() {
         if (matchDyingMessage(suspect)) {
             System.out.println("""
