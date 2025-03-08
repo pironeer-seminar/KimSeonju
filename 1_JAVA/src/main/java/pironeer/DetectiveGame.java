@@ -2,6 +2,7 @@ package pironeer;
 
 import java.util.*;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import pironeer.util.Reader;
 import pironeer.util.Timer;
@@ -177,13 +178,21 @@ public class DetectiveGame {
         investigate();
     }
 
+//    public boolean matchDyingMessage(Character character) {
+//        if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||    //murderer.getHair() -> character.getHair()
+//                dyingMessage.equals("옷은 " + character.getClothes() + " 윽..☠") ||
+//                dyingMessage.equals("신발은 " + character.getShoes() + " 윽..☠")) {
+//            return true;
+//        }
+//        return false;
+//    }
+
     public boolean matchDyingMessage(Character character) {
-        if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||    //murderer.getHair() -> character.getHair()
-                dyingMessage.equals("옷은 " + character.getClothes() + " 윽..☠") ||
-                dyingMessage.equals("신발은 " + character.getShoes() + " 윽..☠")) {
-            return true;
-        }
-        return false;
+        return Stream.of(
+                "머리스타일은 " + character.getHair() + " 윽..☠",
+                "옷은 " + character.getClothes() + " 윽..☠",
+                "신발은 " + character.getShoes() + " 윽..☠"
+        ).anyMatch(dyingMessage::equals);
     }
 
     public String promptChoice(String prompt) {
