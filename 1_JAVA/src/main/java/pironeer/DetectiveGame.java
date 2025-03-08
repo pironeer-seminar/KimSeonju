@@ -297,26 +297,21 @@ public class DetectiveGame {
             askRestart();
             return;
         }
+
+        // 기회가 남았을 때만 실행
+        System.out.println(suspect.getName() + ": 무슨 소리야? 내 인상착의를 봐... 당신 명탐정 맞아? 💢💢💢");
+        System.out.println("\n틀렸습니다... " + suspect.getName() + "씨는 범인이 아닙니다. 남은 기회는 " + lives + "번입니다.");
+        System.out.println("시간이 얼마 남지 않았어요. 신중하게 선택해주세요.");
+        timer.sleep(1000);
+        String choice = promptChoice("용의자들의 인상착의를 다시 보겠습니까? (네/아니오): ");
+        if (choice.equals("네")) {
+            System.out.println(detectiveName + ": 좋았어... 다시 차근차근 보자\n");
+            timer.sleep(1000);
+            mainFlow();
+        } else {
+            accuse();
+        }
     }
-//        } else {
-//            lives--;
-//            if (lives > 0) {
-//                System.out.println(suspect.getName() + ": 무슨 소리야? 내 인상착의를 봐... 당신 명탐정 맞아? 💢💢💢");
-//                System.out.println("\n틀렸습니다... " + suspect.getName() + "씨는 범인이 아닙니다. 남은 기회는 " + lives + "번입니다.");
-//                System.out.println("시간이 얼마 남지 않았어요. 신중하게 선택해주세요.");
-//                timer.sleep(1000);
-//                String choice = promptChoice("용의자들의 인상착의를 다시 보겠습니까? (네/아니오): ");
-//                if (choice.equals("네")) {
-//                    System.out.println(detectiveName + ": 좋았어... 다시 차근차근 보자\n");
-//                    timer.sleep(1000);
-//                    mainFlow();
-//                } else {
-//                    accuse();
-//                }
-//            } else {
-//
-//        }
-//    }
 
     public void askRestart() {
         String choice = promptChoice("게임을 다시 시작하시겠습니까? (네/아니오): ");
