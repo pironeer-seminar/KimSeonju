@@ -63,7 +63,7 @@ public class DetectiveGame {
     }
 
     public enum DyingMessageType {
-        hair("머리스타일은"), clothes("옷은"), shoes("신발은");
+        HAIR("머리스타일은"), CLOTHES("옷은"), SHOES("신발은");             // 대문자로 표기하는 것이 일반적
 
         private final String message;
 
@@ -78,9 +78,9 @@ public class DetectiveGame {
 
     public String getMurdererAttribute(DyingMessageType type) {
         return switch (type) {
-            case hair -> murderer.getHair();
-            case clothes -> murderer.getClothes();
-            case shoes -> murderer.getShoes();
+            case HAIR -> murderer.getHair();
+            case CLOTHES -> murderer.getClothes();
+            case SHOES -> murderer.getShoes();
         };
     }
 
