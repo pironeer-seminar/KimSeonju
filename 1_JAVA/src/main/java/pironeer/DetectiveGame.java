@@ -159,12 +159,7 @@ public class DetectiveGame {
 
         foundCharacter.ifPresentOrElse(                              // ifPresentOrElse(consumer, runnable) <- 매개변수는 하나. 여러 문장은 {} 사용!
                 this::printCharacter,                                // 메서드 참조식, 람다표현식 : chara -> printCharacter(chara)
-                () -> {
-                    System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
-                    System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
-                    System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
-                    investigate();
-                }
+                () -> handleInvalidInput()
         );
     }
 
@@ -175,6 +170,12 @@ public class DetectiveGame {
         System.out.println("- 신발: " + chara.getShoes());
     }
 
+    public void handleInvalidInput() {
+        System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
+        System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
+        System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
+        investigate();
+    }
 
     public boolean matchDyingMessage(Character character) {
         if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||    //murderer.getHair() -> character.getHair()
