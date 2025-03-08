@@ -1,6 +1,7 @@
 package pironeer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -61,21 +62,34 @@ public class DetectiveGame {
         murderer = characters.get(random.nextInt(characters.size()));  // random.nextInt(characters.size())는 0부터 characters.size() - 1 사이의 무작위 정수를 생성
     }
 
-    public void generateDyingMessage() {
-        List<String> dyingMessageType = List.of(                       // "List.of()" : 불변 리스트 생성
-                "hair",
-                "clothes",
-                "shoes"
-        );
+    public enum DyingMessageType {
+        hair("머리스타일은"), clothes("옷은"), shoes("신발은");
 
-        // 6. 랜덤하게 속성 값을 선택하고 다잉메시지 출력
-        String selectType = dyingMessageType.get(random.nextInt(dyingMessageType.size()));
-        switch (selectType) {
-            case "hair" ->                                                                  // -> 연산자를 사용하면 break 없이도 안전한 switch 문 작성 가능.
-                    dyingMessage = "머리스타일은 " + murderer.getHair() + " 윽..☠";
-            case "clothes" -> dyingMessage = "옷은 " + murderer.getClothes() + " 윽..☠";
-            case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes() + " 윽..☠";
+        private final String message;
+
+        DyingMessageType(String message) {
+            this.message = message;
         }
+
+        public String getMessage() {
+            return message;
+        }
+    }
+
+    public String getMurdererAttribute(DyingMessageType type) {
+        return switch (type) {
+            case hair -> murderer.getHair();
+            case clothes -> murderer.getClothes();
+            case shoes -> murderer.getShoes();
+        };
+    }
+
+    public void generateDyingMessage() {
+        DyingMessageType[] values = DyingMessageType.values();
+        DyingMessageType selectedType = values[random.nextInt(values.length)];
+
+        dyingMessage = selectedType.getMessage() + " " + getMurdererAttribute(selectedType) + " 윽..☠";
+
     }
 
     public void printStoryStart() {
