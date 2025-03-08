@@ -208,12 +208,21 @@ public class DetectiveGame {
         String choiceName = reader.nextLine().trim();
         System.out.println(detectiveName + ": 범인은 바로 " + choiceName + "씨야");
 
-        for (Character character : characters) {
-            if (character.getName().equals(choiceName)) {
-                suspect = character;
-                checkOutcome();
-                return;
-            }
+//        for (Character character : characters) {
+//            if (character.getName().equals(choiceName)) {
+//                suspect = character;
+//                checkOutcome();
+//                return;
+//            }
+//        }
+//
+        Optional<Character> foundSuspect = characters.stream()
+                        .filter(c-> c.getName().equals(choiceName)).findFirst();
+
+        if (foundSuspect.isPresent()) {
+            suspect = foundSuspect.get();
+            checkOutcome();
+            return;
         }
 
         System.out.println("탐정님, 그건 잘못된 선택입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
