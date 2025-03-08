@@ -34,7 +34,17 @@ public class DetectiveGame {
         lives = 2;
     }
 
+    // showIntro
     public void showIntro() {
+        inputDetectiveName();
+        selectVictimAndMurderer();
+        generateDyingMessage();
+        printStoryStart();
+        printCrimeScene();
+        printInvestigationStart();
+    }
+
+    public void inputDetectiveName() {
         System.out.println("탐정 게임에 오신 것을 환영합니다.");
         timer.sleep(1000);
 
@@ -42,20 +52,21 @@ public class DetectiveGame {
         System.out.print("탐정의 이름을 입력해주세요:");
         detectiveName = reader.nextLine().trim();                       // 입력 받기 (공백제거)
         timer.sleep(1500);
+    }
 
-
+    public void selectVictimAndMurderer() {
         // 5. 캐릭터 중 한 명을 희생자로 지정하고, 목록에서 제거
         victim = characters.get(random.nextInt(characters.size()));    // 희생자 지정
         characters.remove(victim);                                     // 목록에서 제거
-
         murderer = characters.get(random.nextInt(characters.size()));  // random.nextInt(characters.size())는 0부터 characters.size() - 1 사이의 무작위 정수를 생성
+    }
 
+    public void generateDyingMessage() {
         List<String> dyingMessageType = List.of(                       // "List.of()" : 불변 리스트 생성
                 "hair",
                 "clothes",
                 "shoes"
         );
-
 
         // 6. 랜덤하게 속성 값을 선택하고 다잉메시지 출력
         String selectType = dyingMessageType.get(random.nextInt(dyingMessageType.size()));
@@ -65,7 +76,9 @@ public class DetectiveGame {
             case "clothes" -> dyingMessage = "옷은 " + murderer.getClothes() + " 윽..☠";
             case "shoes" -> dyingMessage = "신발은 " + murderer.getShoes() + " 윽..☠";
         }
+    }
 
+    public void printStoryStart() {
         System.out.println("########################################");
         System.out.println("#######        평화로운 해커톤              ");
         System.out.println("########################################");
@@ -83,7 +96,9 @@ public class DetectiveGame {
         timer.sleep(1000);
         System.out.println("그렇게 둘은 헤어졌고, 그로부터 10분 후 갑자기 정전이 일어나게 되는데..\n");
         timer.sleep(1000);
+    }
 
+    public void printCrimeScene() {
         System.out.println("########################################");
         System.out.println("#######        사건 발생             ");
         System.out.println("########################################");
@@ -101,7 +116,9 @@ public class DetectiveGame {
         System.out.println("                    \"" + dyingMessage + "\"");
         System.out.println("=================================================================");
         timer.sleep(1000);
+    }
 
+    public void printInvestigationStart() {
         // 7. 용의자 총 인원수 출력
         System.out.println("\n문제의 노트북 주위에 있는 사람은 " + characters.size() + "명입니다.");
         timer.sleep(1000);
@@ -171,6 +188,7 @@ public class DetectiveGame {
 
         // 10. charaters 각 항목을 인덱스와 함께 출력
         IntStream.range(0, characters.size()).forEach(i -> System.out.println((i+1)+"."+ characters.get(i).getName()));  //characters.get(i)는 Character 객체 자체를 반환 (객체의 메모리 주소 형식)
+
 
         System.out.println("\n누구를 범인으로 지목하시겠습니까? 이름을 입력하세요: ");
         String choiceName = reader.nextLine().trim();
