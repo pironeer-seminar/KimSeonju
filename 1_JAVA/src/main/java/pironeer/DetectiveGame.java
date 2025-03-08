@@ -157,35 +157,24 @@ public class DetectiveGame {
                 .filter(c -> c.getName().equalsIgnoreCase(choiceName))
                 .findFirst();
 
-        foundCharacter.ifPresentOrElse(                              // ifPresentOrElse(consumer, runnable)
-                chara -> printCharacter(chara),             // chara : foundCharacter가 가지고 있는 Character 객체
+        foundCharacter.ifPresentOrElse(                              // ifPresentOrElse(consumer, runnable) <- 매개변수는 하나. 여러 문장은 {} 사용!
+                this::printCharacter,                                // 메서드 참조식, 람다표현식 : chara -> printCharacter(chara)
                 () -> {
                     System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
                     System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
                     System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
+                    investigate();
                 }
         );
     }
 
-//        // 8. 사용자가 입력한 이름을 가진 용의자 조사
-//        for (Character chara : characters) {                             // for-each 문
-//            if (chara.getName().equals(choiceName)){
-//                System.out.println(choiceName + "의 인상착의를 봅니다.");
-//                System.out.println("- 머리: " + chara.getHair());
-//                System.out.println("- 옷: " + chara.getClothes());
-//                System.out.println("- 신발: " + chara.getShoes());
-//
-//                return;                                                      // # if문 성립시 함수 종료
-//            }
-//
-//        }
-//
-//        System.out.println("잘못된 입력입니다! 시간이 얼마 남지 않았습니다, 다시 시도해주세요!");
-//        System.out.println("범인은 아직도 우리 곁에 있어요. 서둘러 진실을 밝혀내야 합니다!");
-//        System.out.println(detectiveName + ": 좋아, 이번엔 잘 선택해보자.");
-//
-//        investigate();
-//    }
+    public void printCharacter(Character chara) {                     // Optional이 자동으로 Character 객체를 넣어줌
+        System.out.println(chara.getName() + "의 인상착의를 봅니다.");
+        System.out.println("- 머리: " + chara.getHair());
+        System.out.println("- 옷: " + chara.getClothes());
+        System.out.println("- 신발: " + chara.getShoes());
+    }
+
 
     public boolean matchDyingMessage(Character character) {
         if (dyingMessage.equals("머리스타일은 " + character.getHair() + " 윽..☠") ||    //murderer.getHair() -> character.getHair()
