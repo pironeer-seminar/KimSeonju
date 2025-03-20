@@ -1,4 +1,4 @@
-package com.SpringBoot.__SpringBoot.dto;
+package com.SpringBoot.SpringBoot.dto;
 
 import lombok.Getter;
 

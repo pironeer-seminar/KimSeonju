@@ -1,6 +1,6 @@
-package com.SpringBoot.__SpringBoot.service;
+package com.SpringBoot.SpringBoot.service;
 
-import com.SpringBoot.__SpringBoot.dto.TextResponseDto;
+import com.SpringBoot.SpringBoot.dto.TextResponseDto;
 import org.springframework.stereotype.Service;
 
 @Service
