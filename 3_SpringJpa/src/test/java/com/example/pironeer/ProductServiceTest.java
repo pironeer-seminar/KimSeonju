@@ -35,10 +35,8 @@ class ProductServiceTest {
     @DisplayName("상품을 등록하면, DB에 저장되고 ID가 반환되어야 한다.")
     void createProductTest() {
         // given
-        Product product = new Product("Laptop", 1_500_000, 10);
-
         // when
-        Long productId = productService.createProduct(product);
+        Long productId = productService.createProduct("Laptop", 1_500_000, 10);
         em.flush();
         em.clear();
         Product found = productRepository.findById(productId).orElse(null);
@@ -54,13 +52,13 @@ class ProductServiceTest {
     @DisplayName("상품을 여러 개 등록 후, 전체 조회가 가능해야 한다.")
     void getAllProductsTest() {
         // given
-        productService.createProduct(new Product("Phone", 1_000_000, 5));
-        productService.createProduct(new Product("Tablet", 700_000, 3));
+        productService.createProduct("Phone", 1_000_000, 5);
+        productService.createProduct("Tablet", 700_000, 3);
 
         // when
         em.flush();
         em.clear();
-        List<Product> products = productService.getAllProducts();
+        List<Product> products = productService.findProductAll();
 
         // then
         assertThat(products).hasSize(2);
@@ -73,12 +71,11 @@ class ProductServiceTest {
     @DisplayName("재고가 부족할 경우 예외가 발생해야 한다.")
     void decreaseStockFailTest() {
         // given
-        Product product = new Product("Watch", 300_000, 2);
-        Long productId = productService.createProduct(product);
+        Long productId = productService.createProduct("Watch", 300_000, 2);
 
         // when
         assertThrows(IllegalStateException.class, () -> {
-            productService.decreaseStock(productId, 3);
+            productService.decreaseStockQuantity(productId, 3);
         });
 
         // then
