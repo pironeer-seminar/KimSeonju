@@ -27,7 +27,7 @@ public class Order {
 
     protected Order(){}
 
-    public Order(User user, Product product, String status, int amount){
+    public Order(User user, String status, LocalDateTime orderDate){
         this.user = user;
         this.status = status;
         this.orderDate = LocalDateTime.now();

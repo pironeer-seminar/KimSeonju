@@ -16,7 +16,7 @@ public class OrderRequestItem {
 
     public OrderRequestItem(Long productId, int quantity) {
         this.productId = productId;
-        this.quantity = quantity;
+        this.quantity = quantity;   // 갯수
     }
 
     public Long getProductId() {
