@@ -15,9 +15,9 @@ public class ProductService {
     }
 
     // 상품 등록
-    public Product registerProduct(String name, int price, int stockQuantity) {
-        Product product = new Product(name, price, stockQuantity);
-        return productRepository.save(product);
+    public Long createProduct(String name, int price, int stockQuantity) {
+        Product saved = productRepository.save(new Product(name, price, stockQuantity));
+        return saved.id; // ✅ ID만 반환
     }
 
     // 단건 조회

@@ -5,6 +5,7 @@ package com.example.pironeer;
 import com.example.pironeer.domain.*;
 import com.example.pironeer.repository.*;
 
+import com.example.pironeer.service.OrderService;
 import com.example.pironeer.service.ProductService;
 import com.example.pironeer.service.UserService;
 import jakarta.persistence.EntityManager;
@@ -45,14 +46,13 @@ class OrderServiceTest {
     @BeforeEach
     void setUp() {
         // 유저 생성
-        User user = new User("Tester", "tester@example.com");
-        savedUserId = userService.createUser(user);
+        savedUserId = userService.createUser("Tester", "tester@example.com");
 
         // 상품 생성
         Product p1 = new Product("Keyboard", 30_000, 5);
         Product p2 = new Product("Mouse", 20_000, 5);
-        savedProductId1 = productService.createProduct(p1);
-        savedProductId2 = productService.createProduct(p2);
+        savedProductId1 = productService.createProduct("Keyboard", 30_000, 5);
+        savedProductId2 = productService.createProduct("Mouse", 20_000, 5);
     }
 
     @Test

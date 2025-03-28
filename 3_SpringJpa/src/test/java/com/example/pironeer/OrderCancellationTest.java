@@ -1,6 +1,7 @@
 package com.example.pironeer;
 
 import com.example.pironeer.domain.*;
+import com.example.pironeer.dto.OrderRequestItem;
 import com.example.pironeer.repository.*;
 import com.example.pironeer.service.OrderService;
 import com.example.pironeer.service.ProductService;
@@ -13,6 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -42,25 +45,23 @@ class OrderCancellationTest {
     @BeforeEach
     void setUp() {
         // 유저 생성
-        User user = new User("CancelTester", "canceltester@example.com");
-        savedUserId = userService.createUser(user);
+        savedUserId = userService.createUser("CancelTester", "canceltester@example.com");
 
         // 상품 생성
-        Product keyboard = new Product("Keyboard", 30_000, 5);
-        Product mouse = new Product("Mouse", 20_000, 5);
-        keyboardId = productService.createProduct(keyboard);
-        mouseId = productService.createProduct(mouse);
+        keyboardId = productService.createProduct("Keyboard", 30_000, 5);
+        mouseId = productService.createProduct("Mouse", 20_000, 5);
     }
 
     @Test
     @DisplayName("주문을 취소하면 주문 상태가 'CANCELED'가 되고, 재고가 복원되어야 한다.")
     void cancelOrderTest() {
         // given
-        // 1) 주문 생성
-        OrderItem item1 = new OrderItem(keyboardId, 2); // 키보드 2개
-        OrderItem item2 = new OrderItem(mouseId, 1);    // 마우스 1개
-        Long orderId = orderService.createOrder(savedUserId, item1);
-        Long orderId2 = orderService.createOrder(savedUserId, item2);
+        // 1) 주문 요청 DTO 생성
+        OrderRequestItem item1 = new OrderRequestItem(keyboardId, 2);
+        OrderRequestItem item2 = new OrderRequestItem(mouseId, 1);
+
+        Long orderId = orderService.createOrder(savedUserId, List.of(item1));  // 키보드 2개
+        Long orderId2 = orderService.createOrder(savedUserId, List.of(item2)); // 마우스 1개
         em.flush();
         em.clear();
         // 2) 생성된 주문 확인
@@ -95,8 +96,8 @@ class OrderCancellationTest {
     @DisplayName("이미 취소된 주문(상태 'CANCELED')을 다시 취소하려고 하면 예외 발생")
     void cancelAlreadyCanceledOrderTest() {
         // given
-        OrderItem item = new OrderItem(keyboardId, 1);
-        Long orderId = orderService.createOrder(savedUserId, item);
+        OrderRequestItem item = new OrderRequestItem(keyboardId, 1);
+        Long orderId = orderService.createOrder(savedUserId, List.of(item));
         orderService.cancelOrder(orderId); // 한 번 취소
         em.flush();
         em.clear();

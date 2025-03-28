@@ -32,11 +32,9 @@ class UserServiceTest {
     @Test
     @DisplayName("새로운 유저를 등록하면, DB에 저장되어야 한다.")
     void createUserTest() {
-        // given
-        User user = new User("Alice", "alice@example.com");
-
+        // given -> createUser("Alice", "alice@example.com")
         // when
-        Long savedUserId = userService.createUser(user);
+        Long savedUserId = userService.createUser("Alice", "alice@example.com");
         em.flush();
         em.clear();
 
@@ -52,13 +50,13 @@ class UserServiceTest {
     @DisplayName("전체 유저 목록을 조회할 수 있어야 한다.")
     void getUsersTest() {
         // given
-        userService.createUser(new User("Bob", "bob@example.com"));
-        userService.createUser(new User("Charlie", "charlie@example.com"));
+        userService.createUser("Bob", "bob@example.com");
+        userService.createUser("Charlie", "charlie@example.com");
         em.flush();
         em.clear();
 
         // when
-        List<User> userList = userService.getAllUsers();
+        List<User> userList = userService.findUserAll();
 
         // then
         assertThat(userList).hasSize(2);

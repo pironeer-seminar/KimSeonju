@@ -16,9 +16,9 @@ public class UserService {
     }
 
     // 유저 등록
-    public User registerUser(String name, String email) {
-        User user = new User(name, email);
-        return userRepository.save(user); // DB에 저장
+    public Long createUser(String name, String email) {
+        User saved = userRepository.save(new User(name, email));
+        return saved.id; // ✅ ID만 리턴!
     }
 
     // 유저 단건 조회
