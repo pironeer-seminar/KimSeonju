@@ -3,6 +3,7 @@ package com.example.pironeer;
 
 
 import com.example.pironeer.domain.*;
+import com.example.pironeer.dto.OrderRequestItem;
 import com.example.pironeer.repository.*;
 
 import com.example.pironeer.service.OrderService;
@@ -59,14 +60,15 @@ class OrderServiceTest {
     @DisplayName("주문 생성 시 유저와 상품 재고가 정상적으로 처리되어야 한다.")
     void createOrderTest() {
         // given
-        OrderItem item1 = new OrderItem(savedProductId1, 2); // 키보드 2개
-        OrderItem item2 = new OrderItem(savedProductId2, 1); // 마우스 1개
+        OrderRequestItem item1 = new OrderRequestItem(savedProductId1, 2); // 키보드 2개
+        OrderRequestItem item2 = new OrderRequestItem(savedProductId2, 1); // 마우스 1개
 
         // when
-        orderService.createOrder(savedUserId, item1);
-        orderService.createOrder(savedUserId, item2);
+        orderService.createOrder(savedUserId, List.of(item1));
+        orderService.createOrder(savedUserId, List.of(item2));
         em.flush();
         em.clear();
+
         // then
         // 재고 감소 확인
         Product keyboard = productRepository.findById(savedProductId1).orElse(null);
@@ -80,11 +82,11 @@ class OrderServiceTest {
     @DisplayName("주문 생성 중 재고 부족 시 전체 작업이 롤백되어야 한다.")
     void createOrderRollbackTest() {
         // given
-        OrderItem item1 = new OrderItem(savedProductId1, 6); // 키보드 6개 (재고 5개)
+        OrderRequestItem item1 = new OrderRequestItem(savedProductId1, 6); // 키보드 6개 (재고 5개)
 
         // when
         assertThrows(IllegalStateException.class, () -> {
-            orderService.createOrder(savedUserId, item1);
+            orderService.createOrder(savedUserId, List.of(item1));
         });
 
         em.flush();
@@ -102,16 +104,16 @@ class OrderServiceTest {
     @DisplayName("특정 유저의 주문 목록을 조회할 수 있어야 한다.")
     void getUserOrdersTest() {
         // given
-        OrderItem item1 = new OrderItem(savedProductId1, 1);
-        orderService.createOrder(savedUserId, item1);
+        OrderRequestItem item1 = new OrderRequestItem(savedProductId1, 1);
+        orderService.createOrder(savedUserId, List.of(item1));
 
-        OrderItem item2 = new OrderItem(savedProductId2, 2);
-        orderService.createOrder(savedUserId, item2);
+        OrderRequestItem item2 = new OrderRequestItem(savedProductId2, 2);
+        orderService.createOrder(savedUserId, List.of(item2));
 
         em.flush();
         em.clear();
         // when
-        List<Order> userOrders = orderService.getOrdersByUserId(savedUserId);
+        List<Order> userOrders = orderService.findOrdersByUserId(savedUserId);
 
         // then
         assertThat(userOrders).hasSize(2);
