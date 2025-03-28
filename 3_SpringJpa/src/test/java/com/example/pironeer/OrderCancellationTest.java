@@ -2,6 +2,7 @@ package com.example.pironeer;
 
 import com.example.pironeer.domain.*;
 import com.example.pironeer.repository.*;
+import com.example.pironeer.service.UserService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
