@@ -1,9 +1,9 @@
 package com.example.pironeer.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Product {
@@ -11,36 +11,39 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long id;
 
+    // OrderItem과의 연관관계
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    public List<OrderItem> orderItemList = new ArrayList<>();
+
     public String name;
     public int price;
-    public int amount;
+    public int stockQuantity ;  // 재고
 
     protected Product(){}
-    public Product(String name, int price, int amount){
+    public Product(String name, int price, int stockQuantity ){
         this.name = name;
         this.price = price;
-        this.amount = amount;
+        this.stockQuantity  = stockQuantity ;
     }
 
     public String getName() {
          return name;
     }
-
     public int getPrice(){
         return price;
     }
     public int getStockQuantity(){
-        return amount;
+        return stockQuantity ;
     }
 
     public void removeAmount(int amount){
-        if (this.amount < amount){
-            throw new IllegalStateException();
+        if (this.stockQuantity  < amount){
+            throw new IllegalStateException();  // throw : 예외를 "던진다" // new IllegalStateException() : 새 예외 객체를 만들어냄
         }
-        this.amount -= amount;
+        this.stockQuantity  -= amount;
     }
 
     public void addAmount(int amount){
-        this.amount += amount;
+        this.stockQuantity  += amount;
     }
 }
