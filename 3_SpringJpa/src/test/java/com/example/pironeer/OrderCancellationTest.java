@@ -2,7 +2,6 @@ package com.example.pironeer;
 
 import com.example.pironeer.domain.*;
 import com.example.pironeer.repository.*;
-import com.example.pironeer.service.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,8 +54,8 @@ class OrderCancellationTest {
     void cancelOrderTest() {
         // given
         // 1) 주문 생성
-        OrderRequestItem item1 = new OrderRequestItem(keyboardId, 2); // 키보드 2개
-        OrderRequestItem item2 = new OrderRequestItem(mouseId, 1);    // 마우스 1개
+        OrderItem item1 = new OrderItem(keyboardId, 2); // 키보드 2개
+        OrderItem item2 = new OrderItem(mouseId, 1);    // 마우스 1개
         Long orderId = orderService.createOrder(savedUserId, item1);
         Long orderId2 = orderService.createOrder(savedUserId, item2);
         em.flush();
@@ -93,7 +92,7 @@ class OrderCancellationTest {
     @DisplayName("이미 취소된 주문(상태 'CANCELED')을 다시 취소하려고 하면 예외 발생")
     void cancelAlreadyCanceledOrderTest() {
         // given
-        OrderRequestItem item = new OrderRequestItem(keyboardId, 1);
+        OrderItem item = new OrderItem(keyboardId, 1);
         Long orderId = orderService.createOrder(savedUserId, item);
         orderService.cancelOrder(orderId); // 한 번 취소
         em.flush();

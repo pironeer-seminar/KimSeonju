@@ -4,7 +4,6 @@ package com.example.pironeer;
 
 import com.example.pironeer.domain.*;
 import com.example.pironeer.repository.*;
-import com.example.pironeer.service.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -58,8 +57,8 @@ class OrderServiceTest {
     @DisplayName("주문 생성 시 유저와 상품 재고가 정상적으로 처리되어야 한다.")
     void createOrderTest() {
         // given
-        OrderRequestItem item1 = new OrderRequestItem(savedProductId1, 2); // 키보드 2개
-        OrderRequestItem item2 = new OrderRequestItem(savedProductId2, 1); // 마우스 1개
+        OrderItem item1 = new OrderItem(savedProductId1, 2); // 키보드 2개
+        OrderItem item2 = new OrderItem(savedProductId2, 1); // 마우스 1개
 
         // when
         orderService.createOrder(savedUserId, item1);
@@ -79,7 +78,7 @@ class OrderServiceTest {
     @DisplayName("주문 생성 중 재고 부족 시 전체 작업이 롤백되어야 한다.")
     void createOrderRollbackTest() {
         // given
-        OrderRequestItem item1 = new OrderRequestItem(savedProductId1, 6); // 키보드 6개 (재고 5개)
+        OrderItem item1 = new OrderItem(savedProductId1, 6); // 키보드 6개 (재고 5개)
 
         // when
         assertThrows(IllegalStateException.class, () -> {
@@ -101,10 +100,10 @@ class OrderServiceTest {
     @DisplayName("특정 유저의 주문 목록을 조회할 수 있어야 한다.")
     void getUserOrdersTest() {
         // given
-        OrderRequestItem item1 = new OrderRequestItem(savedProductId1, 1);
+        OrderItem item1 = new OrderItem(savedProductId1, 1);
         orderService.createOrder(savedUserId, item1);
 
-        OrderRequestItem item2 = new OrderRequestItem(savedProductId2, 2);
+        OrderItem item2 = new OrderItem(savedProductId2, 2);
         orderService.createOrder(savedUserId, item2);
 
         em.flush();
