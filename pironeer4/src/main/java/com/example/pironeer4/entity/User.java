@@ -6,9 +6,9 @@ import lombok.*;
 @Entity
 @Getter
 @Table(name = "users")
-@Builder(access = AccessLevel.PRIVATE)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder(access = AccessLevel.PRIVATE)             // 빌더 메서드 생성, 객체 생성
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자를 자동 생성, protected User() {}
+@AllArgsConstructor(access = AccessLevel.PRIVATE)  // 모든 필드 받는 생성자
 public class User {
 
     @Id
