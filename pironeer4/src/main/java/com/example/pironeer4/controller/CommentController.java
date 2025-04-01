@@ -24,7 +24,7 @@ public class CommentController {
 
     //게시물에 달린 댓글 조회
     //@PathVariable Long postId : URL 경로에서 받은 {postId}값을 자바 메서드의 postId 변수로 전달해줌
-    @GetMapping("post/{postId}")
+    @GetMapping("/post/{postId}")
     public List<CommentRes> getCommentByPost(@PathVariable Long postId) {
         return commentService.findByPost(postId);
     }

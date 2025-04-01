@@ -2,10 +2,13 @@ package com.example.pironeer4.service;
 
 import com.example.pironeer4.dto.request.PostCreateReq;
 import com.example.pironeer4.dto.request.PostUpdateReq;
+import com.example.pironeer4.dto.response.CommentRes;
+import com.example.pironeer4.dto.response.PostDetailRes;
 import com.example.pironeer4.dto.response.PostSearchRes;
 import com.example.pironeer4.entity.Post;
 import com.example.pironeer4.entity.PostStatus;
 import com.example.pironeer4.entity.User;
+import com.example.pironeer4.repository.CommentRepository;
 import com.example.pironeer4.repository.PostRepository;
 import com.example.pironeer4.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -21,6 +24,7 @@ public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     public Long create(PostCreateReq req) {
         User user = userRepository.findById(req.getUserId())
@@ -43,12 +47,30 @@ public class PostService {
                 .toList();  // 변환된 결과들을 다시 List로 수집
     }
 
-    public PostSearchRes detail(Long postId) {
+    // 단일 포스트
+    public PostDetailRes detail(Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("조회된 게시글이 없습니다."));
 
-        return new PostSearchRes(post.getUser().getId(), post.getId(), post.getTitle(), post.getContent(),
-                post.getCreatedAt());
+        // 댓글 리스트 조회
+        List<CommentRes> comments = commentRepository.findAllByPost(post).stream()
+                .map(c -> new CommentRes(
+                        c.getId(),
+                        c.getUser().getId(),
+                        c.getPost().getId(),
+                        c.getContent(),
+                        c.getCreatedAt()
+                ))
+                .toList();
+
+        return new PostDetailRes(
+                post.getId(),
+                post.getUser().getId(),
+                post.getTitle(),
+                post.getContent(),
+                post.getCreatedAt(),
+                comments // 👈 같이 넣어준다!
+        );
     }
 
     public Long update(Long postId, PostUpdateReq req) {

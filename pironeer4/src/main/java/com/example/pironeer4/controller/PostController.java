@@ -2,6 +2,7 @@ package com.example.pironeer4.controller;
 
 import com.example.pironeer4.dto.request.PostCreateReq;
 import com.example.pironeer4.dto.request.PostUpdateReq;
+import com.example.pironeer4.dto.response.PostDetailRes;
 import com.example.pironeer4.dto.response.PostSearchRes;
 import com.example.pironeer4.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class PostController {
 
     // 단일조회
     @GetMapping("/{postId}")
-    public PostSearchRes detail(
+    public PostDetailRes detail(
             @PathVariable("postId") Long postId
     ) {
         return postService.detail(postId);
