@@ -43,4 +43,10 @@ public class Post {
                 .createdAt(LocalDateTime.now())
                 .build();
     }
+
+    public void update(String title, String content, PostStatus status) {
+        this.title = title;
+        this.content = content;
+        this.status = status;
+    }
 }
