@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
+@AllArgsConstructor  // 모든 필드를 한번에 받는 생성자 생성
 public class PostSearchRes {
 
     private Long userId;
