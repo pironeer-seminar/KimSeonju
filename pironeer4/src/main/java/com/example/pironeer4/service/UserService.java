@@ -9,15 +9,20 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
+@RequiredArgsConstructor  // final 필드용 생성자 자동 생성
 public class UserService {
 
     private final UserRepository userRepository;
 
-    public Long create(UserCreateReq req) {
-        User user = User.create(req.getName());
-        user = userRepository.save(user);
+    // 의존성 생성자
+    // public UserService(UserRepository userRepository) {
+    //        this.userRepository = userRepository;
+    //    } -> @RequiredArgsConstructor 가 자동 생성
 
-        return user.getId();
+    public Long create(UserCreateReq req) {
+        User user = User.create(req.getName());  // 요청에서 이름을 받아와서 객체 생성
+        user = userRepository.save(user);  // DB 저장
+
+        return user.getId();  // ID 반환
     }
 }

@@ -34,13 +34,13 @@ public class PostService {
 
     public List<PostSearchRes> search() {
         // PostStatus가 public인 게시글만 조회할 수 있다.
-        List<Post> posts = postRepository.findAllByStatus(PostStatus.PUBLIC);
-        return posts.stream()
-                .map(post ->
+        List<Post> posts = postRepository.findAllByStatus(PostStatus.PUBLIC); // DB에서 Post 엔티티 리스트를 받아왔어 (List<Post>) -> 근데 클라이언트에 그대로 넘기면 안 돼 → **DTO(PostSearchRes)**로 변환 필요
+        return posts.stream() // 리스트 가공(map)
+                .map(post ->  // map = 각 요소를 변환(transform)하는 함수! , Post → PostSearchRes로 바꾸고 있어
                         new PostSearchRes(post.getUser().getId(), post.getId(), post.getTitle(),
                                 post.getContent(), post.getCreatedAt())
                 )
-                .toList();
+                .toList();  // 변환된 결과들을 다시 List로 수집
     }
 
     public PostSearchRes detail(Long postId) {
