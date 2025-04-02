@@ -92,4 +92,9 @@ public class PostService {
         return postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물을 찾을 수 없음"));
     }
+
+    //특정 유저가 작성한 모든 게시글 조회
+    public List<Post> findAllByUser(User user) {
+        return postRepository.findAllByUser(user);
+    }
 }
