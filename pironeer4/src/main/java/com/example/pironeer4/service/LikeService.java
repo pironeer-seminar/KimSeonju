@@ -35,7 +35,7 @@ public class LikeService {
     }
 
     // 좋아요 수
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // 읽기 전용
     public int countLikes(Post post) {
         return likeRepository.countByPost(post);
     }
