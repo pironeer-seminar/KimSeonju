@@ -5,7 +5,9 @@ import lombok.*;
 
 @Entity
 @Getter
-@Table(name = "likes")
+@Table(name = "likes", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "post_id"})
+})  // uniqueConstraints: (user_id, post_id) 조합이 중복되지 않도록 제약 = 같은 유저가 같은 글에 두 번 좋아요 못 누르게 막음.
 @Builder(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
