@@ -87,4 +87,9 @@ public class PostService {
         postRepository.deleteById(postId);
         return postId;
     }
+
+    public Post findById(Long postId) {
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시물을 찾을 수 없음"));
+    }
 }
