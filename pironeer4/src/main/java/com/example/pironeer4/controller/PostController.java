@@ -63,4 +63,5 @@ public class PostController {
         User user = userService.findById(userId);
         return postService.findAllByUser(user);
     }
+    
 }
