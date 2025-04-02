@@ -18,7 +18,7 @@ public class LikeService {
     // 좋아요 생성
     @Transactional
     public void likePost(User user, Post post) {
-        if (likeRepository.existByUserAndPost(user, post)) {
+        if (likeRepository.existsByUserAndPost(user, post)) {
             throw new IllegalArgumentException("이미 좋아요 존재");
         }
         Like like = Like.create(user, post);
@@ -28,7 +28,7 @@ public class LikeService {
     // 좋아요 해제
     @Transactional
     public void unlikePost(User user, Post post) {
-        if (!likeRepository.existByUserAndPost(user, post)) {
+        if (!likeRepository.existsByUserAndPost(user, post)) {
             throw new IllegalArgumentException("좋아요 누른 적 없음");
         }
         likeRepository.deleteByUserAndPost(user, post);

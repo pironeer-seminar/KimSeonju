@@ -11,7 +11,7 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
     // SELECT EXISTS(
     //  SELECT 1 FROM likes WHERE user_id = ? AND post_id = ?
     //);
-    boolean existByUserAndPost(User user, Post post);
+    boolean existsByUserAndPost(User user, Post post);
 
     // 좋아요 해제(삭제)
     // DELETE FROM likes WHERE user_id = ? AND post_id = ?;

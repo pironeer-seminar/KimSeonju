@@ -39,6 +39,5 @@ public class LikeController {
         Post post = postService.findById(postId);
         return likeService.countLikes(post);
     }
-
 }
 
