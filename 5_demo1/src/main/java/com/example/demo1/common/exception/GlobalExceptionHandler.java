@@ -22,4 +22,11 @@ public class GlobalExceptionHandler {
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    // BaseException
+    @ExceptionHandler(BaseException.class)
+    public ResponseEntity<ApiRes<?>> handleCustomException(BaseException ex) {
+        log.error(ex.getMessage());
+        return new ResponseEntity<>(ApiRes.fail(ex), ex.getHttpStatus());
+    }
+
 }

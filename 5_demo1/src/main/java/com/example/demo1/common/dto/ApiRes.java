@@ -1,5 +1,6 @@
 package com.example.demo1.common.dto;
 
+import com.example.demo1.common.exception.BaseException;
 import com.example.demo1.common.type.ErrorType;
 import com.example.demo1.common.type.SuccessType;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -30,6 +31,16 @@ public record ApiRes<T> (
     // 응답이 있는 버전
     public static <T> ApiRes<T> fail(ErrorType errorType, HttpStatus status, T data) {
         return new ApiRes<>(status.value(), errorType.getCode(), errorType.getMessage(), data);
+    }
+
+    // BaseException
+    public static <T> ApiRes<T> fail(BaseException baseException) {
+        ErrorType errorType = baseException.getErrorType();
+        return new ApiRes<>(
+                baseException.getHttpStatus().value(),
+                errorType.getCode(),
+                errorType.getMessage(),
+                null);
     }
 }
 

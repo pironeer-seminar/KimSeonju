@@ -8,6 +8,8 @@ import com.example.demo1.Post.entity.PostStatus;
 import com.example.demo1.User.entity.User;
 import com.example.demo1.Post.repository.PostRepository;
 import com.example.demo1.User.repository.UserRepository;
+import com.example.demo1.common.exception.NotFoundException;
+import com.example.demo1.common.type.UserErrorType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class PostService {
 
     public Long create(PostCreateReq req) {
         User user = userRepository.findById(req.getUserId())
-                .orElseThrow(() -> new IllegalArgumentException("조회된 유저가 없습니다."));
+                .orElseThrow(() -> new NotFoundException(UserErrorType.NOT_FOUND)); // NotFoundException으로 변경
 
         Post post = Post.create(user, req.getTitle(), req.getContent(), req.getStatus());
         post = postRepository.save(post);
