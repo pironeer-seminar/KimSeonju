@@ -4,6 +4,8 @@ import com.example.demo1.Post.dto.request.PostCreateReq;
 import com.example.demo1.Post.dto.request.PostUpdateReq;
 import com.example.demo1.Post.dto.response.PostSearchRes;
 import com.example.demo1.Post.service.PostService;
+import com.example.demo1.common.dto.ApiRes;
+import com.example.demo1.common.type.PostSuccessType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +25,11 @@ public class PostController {
     }
 
     // 목록조회
+    // ApiRes
     @GetMapping("")
-    public List<PostSearchRes> search() {
-        return postService.search();
+    public ApiRes<List<PostSearchRes>> search() {
+        return ApiRes.success(PostSuccessType.GET_ALL, postService.search());
     }
-
     // 단일조회
     @GetMapping("/{postId}")
     public PostSearchRes detail(
