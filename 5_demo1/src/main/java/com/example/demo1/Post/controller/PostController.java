@@ -37,10 +37,11 @@ public class PostController {
 
     // 단일조회
     @GetMapping("/{postId}")
-    public PostSearchRes detail(
-            @PathVariable("postId") Long postId
-    ) {
-        return postService.detail(postId);
+//    public PostSearchRes detail(@PathVariable("postId") Long postId) {
+//        return postService.detail(postId);
+//    }
+    public ApiRes<PostSearchRes> detail(@PathVariable("postId") Long postId) {
+        return ApiRes.success(PostSuccessType.GET_ONE, postService.detail(postId));
     }
 
     // 수정
