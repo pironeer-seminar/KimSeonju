@@ -60,7 +60,7 @@ public class PostController {
 //    }
     @Operation(summary = "게시물 수정", description = "특정 게시물을 수정합니다.")
     @PutMapping("/{postId}")
-    public ApiRes<Long> update(@PathVariable("postId") Long postId, @RequestBody PostUpdateReq req) {
+    public ApiRes<Long> update(@PathVariable("postId") Long postId, @RequestBody @Valid PostUpdateReq req) {
         Long id = postService.update(postId, req);
         return ApiRes.success(PostSuccessType.UPDATE, id);
     }
