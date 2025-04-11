@@ -30,6 +30,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ApiRes.fail(ex), ex.getHttpStatus());
     }
 
+
     //MethodArgumentNotValidException : 요청 객체(DTO)의 필드가 검증 조건을 만족하지 못하면 발생하는 예외 클래스
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiRes<?>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
