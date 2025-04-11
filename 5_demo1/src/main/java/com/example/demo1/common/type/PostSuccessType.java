@@ -3,7 +3,9 @@ package com.example.demo1.common.type;
 public enum PostSuccessType implements SuccessType {
 
     // enum 상수
-    GET_ALL("POST_1", "게시물 목록 조회에 성공하였습니다"); // = "new PostSuccessType("POST_1", "게시글 목록 조회에 성공하였습니다.");"
+    GET_ALL("POST_1", "게시물 목록 조회에 성공하였습니다"), // = "new PostSuccessType("POST_1", "게시글 목록 조회에 성공하였습니다.");"
+    CREATE("POST_2", "게시물 생성에 성공하였습니다");
+
 
     private final String code;
     private final String message;

@@ -20,8 +20,12 @@ public class PostController {
 
     // 생성
     @PostMapping("")
-    public Long create(@RequestBody PostCreateReq req) {
-        return postService.create(req);
+    //    public Long create(@RequestBody PostCreateReq req) {
+    //        return postService.create(req);
+    //    }
+    public ApiRes<Long> create(@RequestBody PostCreateReq req) {
+        Long id = postService.create(req);
+        return ApiRes.success(PostSuccessType.CREATE, id);
     }
 
     // 목록조회
@@ -30,6 +34,7 @@ public class PostController {
     public ApiRes<List<PostSearchRes>> search() {
         return ApiRes.success(PostSuccessType.GET_ALL, postService.search());
     }
+
     // 단일조회
     @GetMapping("/{postId}")
     public PostSearchRes detail(
