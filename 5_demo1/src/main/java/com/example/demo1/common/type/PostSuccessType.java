@@ -10,7 +10,6 @@ public enum PostSuccessType implements SuccessType {
     DELETE("POST_5", "게시물 삭제에 성공하였습니다.");
 
 
-
     private final String code;
     private final String message;
 
