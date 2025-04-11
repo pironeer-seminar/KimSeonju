@@ -7,6 +7,7 @@ import com.example.demo1.Post.service.PostService;
 import com.example.demo1.common.dto.ApiRes;
 import com.example.demo1.common.type.PostSuccessType;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class PostController {
 //    }
     @Operation(summary = "게시물 생성", description = "새 게시물을 작성합니다.")
     @PostMapping("")
-    public ApiRes<Long> create(@RequestBody PostCreateReq req) {
+    public ApiRes<Long> create(@RequestBody @Valid PostCreateReq req) {
         Long id = postService.create(req);
         return ApiRes.success(PostSuccessType.CREATE, id);
     }
