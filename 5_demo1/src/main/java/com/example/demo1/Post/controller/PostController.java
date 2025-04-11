@@ -46,10 +46,14 @@ public class PostController {
 
     // 수정
     @PutMapping("/{postId}")
-    public Long update(
-            @PathVariable("postId") Long postId,
-            @RequestBody PostUpdateReq req) {
-        return postService.update(postId, req);
+//    public Long update(
+//            @PathVariable("postId") Long postId,
+//            @RequestBody PostUpdateReq req) {
+//        return postService.update(postId, req);
+//    }
+    public ApiRes<Long> update(@PathVariable("postId") Long postId, @RequestBody PostUpdateReq req) {
+        Long id = postService.update(postId, req);
+        return ApiRes.success(PostSuccessType.UPDATE, id);
     }
 
     // 삭제
