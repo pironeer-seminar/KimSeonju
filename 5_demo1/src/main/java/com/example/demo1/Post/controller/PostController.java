@@ -58,9 +58,10 @@ public class PostController {
 
     // 삭제
     @DeleteMapping("/{postId}")
-    public Long delete(
-            @PathVariable("postId") Long postId
-    ) {
-        return postService.delete(postId);
+//    public Long delete(@PathVariable("postId") Long postId) {
+//        return postService.delete(postId);
+//    }
+    public ApiRes<Long> delete(@PathVariable("postId") Long postId) {
+        return ApiRes.success(PostSuccessType.DELETE, postService.delete(postId));
     }
 }
